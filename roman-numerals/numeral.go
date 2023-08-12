@@ -71,6 +71,10 @@ func ConvertToArabic(roman string) int {
 }
 
 func couldBeSubtractive(roman string, i int, currentSymbol uint8) bool {
+	return i+1 < len(roman) && isSubtractive(currentSymbol)
+}
+
+func isSubtractive(currentSymbol uint8) bool {
 	isSubtractiveSymbol := currentSymbol == 'I' || currentSymbol == 'C' || currentSymbol == 'X'
-	return i+1 < len(roman) && isSubtractiveSymbol
+	return isSubtractiveSymbol
 }
