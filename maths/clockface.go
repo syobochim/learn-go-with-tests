@@ -1,6 +1,13 @@
 package maths
 
-import "time"
+import (
+	"math"
+	"time"
+)
+
+func secondsInRadians(t time.Time) float64 {
+	return math.Pi
+}
 
 type Point struct {
 	X float64
