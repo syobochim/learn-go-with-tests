@@ -6,7 +6,8 @@ import (
 )
 
 func secondsInRadians(t time.Time) float64 {
-	return math.Pi
+	// return float64(t.Second()) * math.Pi / 30 // 2π / 60
+	return math.Pi / (30 / float64(t.Second())) // For floats horrible
 }
 
 type Point struct {
