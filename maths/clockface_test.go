@@ -49,6 +49,17 @@ func TestSecondHandPoint(t *testing.T) {
 	}
 }
 
+func TestSecondHandAt30Seconds(t *testing.T) {
+	tm := time.Date(1337, time.January, 1, 0, 0, 30, 0, time.UTC)
+
+	want := Point{X: 150, Y: 150 + 90}
+	got := SecondHand(tm)
+
+	if got != want {
+		t.Errorf("Got %v, wanted %v", got, want)
+	}
+}
+
 func simpleTime(hours, minutes, seconds int) time.Time {
 	return time.Date(312, time.October, 28, hours, minutes, seconds, 0, time.UTC)
 }
@@ -58,6 +69,7 @@ func testName(t time.Time) string {
 }
 
 func roughlyEqualFloat64(a, b float64) bool {
+	// 小さすぎる差分は無視する
 	const equalityThreshold = 1e-7
 	return math.Abs(a-b) < equalityThreshold
 }

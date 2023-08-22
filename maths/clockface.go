@@ -23,6 +23,11 @@ func secondHandPoint(t time.Time) Point {
 	return Point{x, y}
 }
 
+// SecondHand は t.Time でのアナログ時計の秒針の単位ベクトルをPointとして表現したものです。
 func SecondHand(t time.Time) Point {
-	return Point{150, 60}
+	p := secondHandPoint(t)
+	p = Point{p.X * 90, p.Y * 90}   // Scale it to the length of the hand
+	p = Point{p.X, -p.Y}            // Flip it over the X axis to account for the SVG having an origin in the top left hand corner
+	p = Point{p.X + 150, p.Y + 150} // Translate it to the right position (so that it's coming from an origin of (150,150))
+	return p
 }
