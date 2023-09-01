@@ -52,19 +52,19 @@ func SVGWriter(w io.Writer, time time.Time) {
 
 // SecondHand は t.Time でのアナログ時計の秒針の単位ベクトルをPointとして表現したものです。
 func SecondHand(w io.Writer, t time.Time) {
-	p := secondHandPoint(t)
-	p = Point{p.X * secondHandLength, p.Y * secondHandLength} // Scale it to the length of the hand
-	p = Point{p.X, -p.Y}                                      // Flip it over the X axis to account for the SVG having an origin in the top left hand corner
-	p = Point{p.X + clockCentreX, p.Y + clockCentreY}         // Translate it to the right position (so that it's coming from an origin of (150,150))
+	p := makeHand(secondHandPoint(t), secondHandLength)
 	fmt.Fprintf(w, `<line x1="150" y1="150" x2="%.3f" y2="%.3f" style="fill:none;stroke:#f00;stroke-width:3px;"/>`, p.X, p.Y)
 }
 
 func minuteHand(w io.Writer, t time.Time) {
-	p := minuteHandPoint(t)
-	p = Point{p.X * minuteHandLength, p.Y * minuteHandLength}
-	p = Point{p.X, -p.Y}
-	p = Point{p.X + clockCentreX, p.Y + clockCentreY}
+	p := makeHand(minuteHandPoint(t), minuteHandLength)
 	fmt.Fprintf(w, `<line x1="150" y1="150" x2="%.3f" y2="%.3f" style="fill:none;stroke:#000;stroke-width:3px;"/>`, p.X, p.Y)
+}
+
+func makeHand(p Point, length float64) Point {
+	p = Point{p.X * length, p.Y * length}
+	p = Point{p.X, -p.Y}
+	return Point{p.X + clockCentreX, p.Y + clockCentreY}
 }
 
 const svgStart = `<?xml version="1.0" encoding="UTF-8" standalone="no"?>
