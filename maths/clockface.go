@@ -46,6 +46,7 @@ func angleToPoint(angle float64) Point {
 const (
 	secondHandLength = 90
 	minuteHandLength = 80
+	hourHandLength   = 50
 	clockCentreX     = 150
 	clockCentreY     = 150
 )
@@ -55,6 +56,7 @@ func SVGWriter(w io.Writer, time time.Time) {
 	io.WriteString(w, bezel)
 	SecondHand(w, time)
 	minuteHand(w, time)
+	hourHand(w, time)
 	io.WriteString(w, svgEnd)
 }
 
@@ -66,6 +68,11 @@ func SecondHand(w io.Writer, t time.Time) {
 
 func minuteHand(w io.Writer, t time.Time) {
 	p := makeHand(minuteHandPoint(t), minuteHandLength)
+	fmt.Fprintf(w, `<line x1="150" y1="150" x2="%.3f" y2="%.3f" style="fill:none;stroke:#000;stroke-width:3px;"/>`, p.X, p.Y)
+}
+
+func hourHand(w io.Writer, t time.Time) {
+	p := makeHand(hourHandPoint(t), hourHandLength)
 	fmt.Fprintf(w, `<line x1="150" y1="150" x2="%.3f" y2="%.3f" style="fill:none;stroke:#000;stroke-width:3px;"/>`, p.X, p.Y)
 }
 
