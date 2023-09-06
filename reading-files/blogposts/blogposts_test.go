@@ -1,12 +1,13 @@
 package blogposts_test
 
 import (
+	"learn-go/reading-files/blogposts"
 	"testing"
 	"testing/fstest"
 )
 
 func TestNewBlogPosts(t *testing.T) {
-	fs := fstest.MapFile{
+	fs := fstest.MapFS{
 		"hello-world.md":  {Data: []byte("hi")},
 		"hello-world2.md": {Data: []byte("hora")},
 	}
