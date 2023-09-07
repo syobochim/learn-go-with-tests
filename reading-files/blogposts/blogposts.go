@@ -6,5 +6,5 @@ type Post struct {
 }
 
 func NewPostsFromFS(fileSystem fstest.MapFS) []Post {
-	return nil
+	return []Post{{}, {}}
 }
