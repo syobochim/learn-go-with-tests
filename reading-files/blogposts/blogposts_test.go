@@ -4,17 +4,21 @@ import (
 	"errors"
 	"io/fs"
 	"learn-go/reading-files/blogposts"
+	"reflect"
 	"testing"
 	"testing/fstest"
 )
 
 func TestNewBlogPosts(t *testing.T) {
 	fs := fstest.MapFS{
-		"hello-world.md":  {Data: []byte("hi")},
-		"hello-world2.md": {Data: []byte("hora")},
+		"hello-world.md":  {Data: []byte("Title: Post 1")},
+		"hello-world2.md": {Data: []byte("Title Post 2")},
 	}
 
 	posts, err := blogposts.NewPostsFromFS(fs)
+
+	got := posts[0]
+	want := blogposts.Post{Title: "Post 1"}
 
 	if err != nil {
 		t.Fatal(err)
@@ -22,6 +26,10 @@ func TestNewBlogPosts(t *testing.T) {
 
 	if len(posts) != len(fs) {
 		t.Errorf("hot %d posts, wanted %d posts", len(posts), len(fs))
+	}
+
+	if !reflect.DeepEqual(got, want) {
+		t.Errorf("got %+v, want %+v", got, want)
 	}
 }
 
