@@ -32,10 +32,10 @@ func getPost(filesystem fs.FS, f fs.DirEntry) (Post, error) {
 	}
 	defer postFile.Close()
 
-	return newPost(err, postFile)
+	return newPost(postFile)
 }
 
-func newPost(err error, postFile fs.File) (Post, error) {
+func newPost(postFile fs.File) (Post, error) {
 	postData, err := io.ReadAll(postFile)
 	if err != nil {
 		return Post{}, err
