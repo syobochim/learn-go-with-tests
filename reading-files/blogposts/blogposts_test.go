@@ -17,9 +17,6 @@ func TestNewBlogPosts(t *testing.T) {
 
 	posts, err := blogposts.NewPostsFromFS(fs)
 
-	got := posts[0]
-	want := blogposts.Post{Title: "Post 1"}
-
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -28,9 +25,7 @@ func TestNewBlogPosts(t *testing.T) {
 		t.Errorf("hot %d posts, wanted %d posts", len(posts), len(fs))
 	}
 
-	if !reflect.DeepEqual(got, want) {
-		t.Errorf("got %+v, want %+v", got, want)
-	}
+	assertPost(t, posts[0], blogposts.Post{Title: "Post 1"})
 }
 
 type StubFailingFS struct {
@@ -38,4 +33,11 @@ type StubFailingFS struct {
 
 func (s StubFailingFS) Open(name string) (fs.File, error) {
 	return nil, errors.New("oh no, i always fail")
+}
+
+func assertPost(t *testing.T, got blogposts.Post, want blogposts.Post) {
+	t.Helper()
+	if !reflect.DeepEqual(got, want) {
+		t.Errorf("got %+v, want %+v", got, want)
+	}
 }
