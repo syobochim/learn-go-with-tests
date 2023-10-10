@@ -14,14 +14,14 @@ func TestAssertFunction(t *testing.T) {
 	})
 }
 
-func AssertEqual(t *testing.T, got, want int) {
+func AssertEqual(t *testing.T, got, want interface{}) {
 	t.Helper()
 	if got != want {
 		t.Errorf("got %d, want %d", got, want)
 	}
 }
 
-func AssertNotEqual(t *testing.T, got, want int) {
+func AssertNotEqual(t *testing.T, got, want interface{}) {
 	t.Helper()
 	if got == want {
 		t.Errorf("didn't want %d", got)
